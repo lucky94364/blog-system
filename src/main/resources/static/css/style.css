@@ -1,0 +1,12 @@
+/* 增强代码块显示（如果文章内容包含代码） */
+pre {
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+}
+
+/* 响应式图片 */
+img {
+    max-width: 100%;
+    height: auto;
+}
