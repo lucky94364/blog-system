@@ -29,4 +29,7 @@ public interface PostService {
 
     // 根据关键词搜索文章
     List<Post> searchPostsByKeyword(String keyword);
+
+    // 获取内容摘要
+    String getContentSummary(String htmlContent, int maxLength);
 }

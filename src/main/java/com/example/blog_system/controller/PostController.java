@@ -100,7 +100,7 @@ public class PostController {
     // 增加图片
     @PostMapping("/upload-image")
     public Map<String, Object> uploadImage(
-        @RequestParam("editormd-image-file") MultipartFile file,
+        @RequestParam("file") MultipartFile file,
         HttpServletRequest request
     ){
         Map<String, Object> result = new HashMap<>();

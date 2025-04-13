@@ -3,6 +3,8 @@ package com.example.blog_system.service.impl;
 import com.example.blog_system.model.Post;
 import com.example.blog_system.repository.PostRepository;
 import com.example.blog_system.service.PostService;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,10 @@ public class PostServiceImpl implements PostService {
         if(post.getTitle() == null || post.getTitle().trim().isEmpty()){
             throw new IllegalArgumentException("文章标题不能为空");
         }
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        post.setHtmlContent(renderer.render(parser.parse(post.getContent())));
+        post.setSummary(getContentSummary(post.getHtmlContent(), 100));
         return postRepository.save(post);
     }
 
@@ -60,5 +66,17 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> searchPostsByKeyword(String keyword) {
         return postRepository.findByTitleContainingOrContentContaining(keyword, keyword);
+    }
+
+    @Override
+    public String getContentSummary(String htmlContent, int maxLength) {
+        if (htmlContent == null || htmlContent.isEmpty()) {
+            return "";
+        }
+        String summary = htmlContent.replaceAll("<[^>]+>", ""); // 移除HTML标签
+        if (summary.length() > maxLength) {
+            summary = summary.substring(0, maxLength) + "..."; // 截取指定长度并添加省略号
+        }
+        return summary;
     }
 }

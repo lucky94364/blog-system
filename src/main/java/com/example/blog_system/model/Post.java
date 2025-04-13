@@ -30,12 +30,15 @@ public class Post {
     @Column(columnDefinition = "TEXT")
     private String htmlContent;
 
+    @Column(columnDefinition = "TEXT")
+    private String summary;
+
     @Column(name = "created_at") //指定数据库列名
     private LocalDateTime createdAt;
 
     //定义无参构造器，JPA要求
     public Post(){
-
+        this.createdAt = LocalDateTime.now();
     }
 
     //定义有参构造器
