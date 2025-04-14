@@ -8,7 +8,9 @@ import com.vladsch.flexmark.parser.Parser;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,6 +62,13 @@ public class PostServiceImpl implements PostService {
     // 添加其他业务逻辑方法
     @Override
     public Page<Post> getAllPostsByPage(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Post> getPostsPagedBySort(int page, int size, String sortBy, String sortDir) {
+        Sort.Direction direction = sortDir.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page,size,Sort.by(direction,sortBy));
         return postRepository.findAll(pageable);
     }
 

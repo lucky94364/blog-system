@@ -32,10 +32,14 @@ public class PostController {
     public String listPosts(
             @RequestParam(defaultValue = "0") int page, // 默认为第一页
             @RequestParam(defaultValue = "9") int size, // 每页显示10条数据
+            @RequestParam(defaultValue = "createdAt") String sortBy, // 排序字段，默认为创建时间
+            @RequestParam(defaultValue = "desc") String sortDir, // 排序方向，默认为降序
             Model model
     ) {
-        Page<Post> postPage = postService.getAllPostsByPage(PageRequest.of(page, size));
+        Page<Post> postPage = postService.getPostsPagedBySort(page, size, sortBy, sortDir);
         model.addAttribute("postsPage", postPage);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortDir", sortDir);
         return "posts/list"; // 对应 templates/posts/list.html
     }
 

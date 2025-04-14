@@ -26,6 +26,8 @@ public interface PostService {
     // 自定义分页查询
     // PostService.java
     Page<Post> getAllPostsByPage(Pageable pageable);
+    // 使用排序后的顺序分页
+    Page<Post> getPostsPagedBySort(int page, int size, String sortBy, String sortDir);
 
     // 根据关键词搜索文章
     List<Post> searchPostsByKeyword(String keyword);
