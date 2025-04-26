@@ -68,6 +68,7 @@ cp src/main/resources/application.example.yml src/main/resources/application.yml
 
 # 编译运行
 mvn spring-boot:run
+```
 
 ## 📂 项目结构
 blog-system
